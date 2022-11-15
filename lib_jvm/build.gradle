@@ -1,0 +1,22 @@
+plugins {
+    id 'java-library'
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.github.JailedBird.jitpack'
+                artifactId = 'lib_jvm'
+                version = '0.0.2-beta08'
+            }
+        }
+    }
+}

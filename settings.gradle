@@ -18,3 +18,4 @@ dependencyResolutionManagement {
 rootProject.name = "jitpack"
 include ':app'
 include ':lib1'
+include ':lib_jvm'

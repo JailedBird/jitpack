@@ -51,7 +51,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.JailedBird'
                 artifactId = 'jitpack'
-                version = '0.0.2-beta07'
+                version = '0.0.2-beta08'
             }
         }
     }
