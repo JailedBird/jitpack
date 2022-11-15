@@ -40,14 +40,17 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
 
+// 注意 这边配置的groupId artifactId version 实际测试只对本地mavenLocal生效
+// jitpack点击发布貌似不会采纳 而是 根据 com.github.userName:projectName:Tag的格式
+// 因此 本地配置的版本和远程配置的版本请完全对应
 afterEvaluate {
     publishing {
         publications {
             release(MavenPublication) {
                 from components.release
-                groupId = 'com.github.JailedBird.jitpack'
-                artifactId = 'lib1'
-                version = '0.0.2'
+                groupId = 'com.github.JailedBird'
+                artifactId = 'jitpack'
+                version = '0.0.2-beta04'
             }
         }
     }
