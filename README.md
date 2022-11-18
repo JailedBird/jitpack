@@ -12,21 +12,28 @@
 
 下面先铺垫下本文的一些术语：
 1、 Java库
-如 [arouter-annotation](https://github.com/JailedBird/ARouter/blob/develop/arouter-annotation/build.gradle) 在模块的build.gradle配置java插件， 这就是典型的Java库; 注解处理器模块必须要Java模块编写，大部分Android开发者是不会单独写Java库的;
+
+在模块的build.gradle配置java插件， 这就是典型的Java库; 注解处理器模块必须要Java模块编写(如 [arouter-annotation](https://github.com/JailedBird/ARouter/blob/develop/arouter-annotation/build.gradle)) ，大部分Android开发者是不会单独写Java库的; 
 
 ```kotlin
 apply plugin: 'java'
 ```
 
+
 2、 Android库
-如[arouter-api](https://github.com/JailedBird/ARouter/blob/develop/arouter-api/build.gradle) 在模块下的build配置android-library（或android-application）插件, 这也是大部分Android开发者写的库的格式；
+
+在模块下的build配置android-library（或android-application）插件(如[arouter-api](https://github.com/JailedBird/ARouter/blob/develop/arouter-api/build.gradle)) , 这也是大部分Android开发者写的库的格式；
 
 ```kotlin
 apply plugin: 'com.android.library'
 ```
 
+
+
 3、 AGP插件版本
 升到gradle7后插件由AGP4变为AGP7，相应的插件、发布方式也变化很大， 因此非常必要区分AGP4和AGP7下的发布插件
+
+
 
 4、 单library、多library
 单library指的是工程下只存在一个需要发布到远端的库, 大多数库都是都是这样
@@ -40,15 +47,19 @@ apply plugin: 'com.android.library'
 - AGP7下环境下，多library下的插件发布
 - AGP7下环境下，单library下的插件发布
 
-
+ 
 
 ## 1、 AGP4 多library发布
+
+gradle7之下的库基本上都可以用这种方式发布，发布及其简单
+
+
 
 ### 演示分支
 
 https://github.com/JailedBird/jitpack/tree/feat-AGP4-muti-lib
 
-gradle7之下的库基本上都可以用这种方式发布，发布及其简单
+
 
 ### 配置插件
 
@@ -76,9 +87,7 @@ allprojects {
 注意： 这个插件被标记废弃了， 在AGP7就不要使用了， 但是AGP4下使用还是非常香的！
 
 ### 导入插件
-
-需要发布的模块build.gradle中， 导入'com.github.dcendents.android-maven' 插件
-（注：这个插件不区分Android模块和Java模块，直接用即可）
+需要发布的模块build.gradle中， 导入'com.github.dcendents.android-maven' 插件（注：这个插件不区分Android模块和Java模块，直接用即可）
 
 ```kotlin
 plugins {
@@ -86,17 +95,17 @@ plugins {
 }
 ```
 
-然后就不用配置任何东西， 包括GROUP_ID, ARTIFICAL_ID, VERSION
+然后就不用配置任何东西， `GROUP_ID`, `ARTIFICAL_ID`, `VERSION`也不需要再去配置;
 
-### github发布版本
+### github发布版本 
 
-细节请参考这篇文章：[**Creating Releases 创建发布包**](https://github.com/waylau/github-help/blob/master/Creating%20Releases%20%E5%88%9B%E5%BB%BA%E5%8F%91%E5%B8%83%E5%8C%85.md)； 一通操作下来按照如下操作, 确定**发布版本号**、**发布的分支** ， 如下图：
+细节请参考这篇文章：[**Creating Releases 创建发布包**](https://github.com/waylau/github-help/blob/master/Creating%20Releases%20%E5%88%9B%E5%BB%BA%E5%8F%91%E5%B8%83%E5%8C%85.md)； 确定**发布的版本号**、**发布的分支** :
 
 ![](https://zhaojunchen-1259455842.cos.ap-nanjing.myqcloud.com/img/20221118161410.png)
 
-上述的TAG和分支及其重要， 发布时候不要选错！
 
-创建完毕后， 会给选择的分支打上标签：
+
+创建完毕后， 会自动给选择的分支打上标签（等价git tag指令， 因此下文会用TAG去称呼这个发布版本号） ：
 
 ![image-20221118161536572](https://zhaojunchen-1259455842.cos.ap-nanjing.myqcloud.com/img/image-20221118161536572.png)
 
@@ -112,11 +121,11 @@ github release下也能找到对应的发布源码：
 
 ![](https://zhaojunchen-1259455842.cos.ap-nanjing.myqcloud.com/img/20221118161826.png)
 
-构建完成后可以查看日志排查问题， 构建成功后就可以滑到下方
+如下显示绿色的Log图标表示构建成功， 点击它可查看日志；如果构建失败， 请点击其错误日志寻找错误原因；
 
-![image-20221118162358696](Jitpack发布最强指南.assets/image-20221118162358696.png)
+![image-20221118162358696](https://zhaojunchen-1259455842.cos.ap-nanjing.myqcloud.com/img/image-20221118162358696.png) 
 
-网站会告诉你导入方式：Add the dependency
+ 再次点击 `Get it` 会滑到网页下方， 会告诉你导入插件的方式， 按照路径导入即可
 
 ```css
 	dependencies {
@@ -129,9 +138,13 @@ github release下也能找到对应的发布源码：
 
 ### 导入方式总结
 
-多模块下，格式为： `com.github.github用户名.项目名:模块名:release发布时的TAG`
+多模块下，依赖格式为 `com.github.githubusername.projectname:libraryname:release_tag`
 
-
+> GROUP_ID = com.github.JailedBird.jitpack
+>
+> ARTIFICAL_ID = lib1 、 lib_jvm
+>
+> VERSION=feat-AGP4-muti-lib-V1.0.0
 
 ## 2、 AGP4 单library发布
 
@@ -140,8 +153,6 @@ github release下也能找到对应的发布源码：
 https://github.com/JailedBird/jitpack/tree/feat-AGP4-single-lib
 
 其他的操作都是一致的， 区别在于导入的方式有细微区别：
-
-
 
 ![image-20221118163008299](Jitpack发布最强指南.assets/image-20221118163008299.png)
 
@@ -153,35 +164,53 @@ implementation 'com.github.JailedBird:jitpack:feat-AGP4-single-lib-V1.0.0'
 
 ### 导入方式总结
 
-单模块下，格式为： `com.github.github用户名.项目名:release发布时的TAG`
+单模块下，依赖格式为 `com.github.githubusername:projectname:release_tag`
+
+> GROUP_ID = com.github.JailedBird
+>
+> ARTIFICAL_ID = jitpack
+>
+> VERSION=feat-AGP4-single-lib-V1.0.0
 
 
 
 ## AGP4发布小结
 
-- 项目中无法决定版本号、groupid，artificialid，这些都是github和项目的名称决定的， 这样某种意义上是存在局限的， 但是确实方便
+- 项目中无法主动配置GROUP_ID、ARTIFICAL_ID、VERSION， 这些都是github用户名、项目名、模块名、TAG这几个元素限定死的；
 
-- 无法本地发布， 因此无法本地验证生成aar
-
-- 可以再不发布github release的情况下使用SNAPSHOT验证你的分支是否可以正常打包， 这是TAG的名称为 分支名+SNAPSHOT, 通过他可以快速发布调试library
+- 无法本地发布， 因此无法本地验证是否可以正确生成aar文件； 对此可以在不发布github release的情况下使用SNAPSHOT验证你的分支是否可以正常打包； 在jitpack的Branches这里选择选择你要打包的分支，默认的TAG名称: 分支名+SNAPSHOT, 通过他可以快速发布SNAPSHOT library, 也可避免平凡的占用版本号;      
 
   ![image-20221118164010170](https://zhaojunchen-1259455842.cos.ap-nanjing.myqcloud.com/img/image-20221118164010170.png)
 
-- 默认会发布源码和注释， 不用去专门配置
+- 默认会发布源码和注释， 不用去专门配置;
 
-- 多模块下， 所有模块的版本号（TAG） 都是一样的， 这方便了管理
+- 多模块下，所有模块的版本号（TAG） 都是一样的， 这方便了多library的管理；
 
+- 多模块下，依赖格式为 `com.github.githubusername:projectname:release_tag`
 
+- 单模块下，依赖格式为 `com.github.githubusername:projectname:release_tag`
+
+  
 
 ## 3、 AGP7发布多模块发布
+
+AGP7下使用maven-publish插件发布， 功能强很多但是用起来相对也更加麻烦、 门槛更高；
+
+
 
 ### 演示分支
 
 https://github.com/JailedBird/jitpack/tree/feat-AGP7-muti-lib
 
+
+
 ### 配置脚本
 
-根目录下配置jitpack.yml， AGP7使用的是java11， 配置openjdk11（默认貌似为8）
+
+
+#### jitpack.yml
+
+AGP7使用的是java11， 配置openjdk11（默认为8, 可能会导致编译不过）, 因此根目录下配置jitpack.yml显示指定jdk11
 
 ```
 # https://github.com/jitpack/jitpack.io/issues/4474
@@ -189,11 +218,91 @@ jdk:
   - openjdk11
 ```
 
-将脚本放到`maven-publish.gradle` 放到项目中， 本项目放到gradle目录下， [请下载脚本到自己的目录中](https://github.com/JailedBird/jitpack/blob/main/gradle/maven-publish.gradle)
 
-**该脚本支持android模块和java模块， 默认会发布源码和注释到aar依赖中**
 
-待发布的模块build.gradle导入脚本
+#### [maven-publish.gradle](https://github.com/JailedBird/jitpack/blob/main/gradle/maven-publish.gradle) 
+
+**该脚本支持android模块和java模块， 默认会发布源码和注释到aar依赖中**；
+
+```
+apply plugin: "maven-publish"
+/**
+ * Reference doc:
+ * https://docs.gradle.org/current/dsl/org.gradle.api.publish.maven.MavenPublication.html#org.gradle.api.publish.maven.MavenPublication:artifact(java.lang.Object)
+ * https://docs.gradle.org/current/userguide/publishing_setup.html
+ * */
+afterEvaluate { project ->
+    if (plugins.hasPlugin('com.android.application') || plugins.hasPlugin('com.android.library')) {
+        /** Android doc*/
+        task androidJavadocs(type: Javadoc) {
+            failOnError false
+            source = android.sourceSets.main.java.source
+            classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+        }
+        /** Android doc jar*/
+        task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
+            getArchiveClassifier().convention('javadoc')
+            getArchiveClassifier().set('javadoc')
+            from androidJavadocs.destinationDir
+        }
+        /** Android source jar*/
+        task androidSourcesJar(type: Jar) {
+            getArchiveClassifier().convention('sources')
+            getArchiveClassifier().set('sources')
+            from android.sourceSets.main.java.source
+        }
+    } else if (plugins.hasPlugin("java")) {
+        /** Java source jar*/
+        task sourcesJar(type: Jar, dependsOn: classes) {
+            getArchiveClassifier().convention('sources')
+            getArchiveClassifier().set('sources')
+            from sourceSets.main.allSource
+        }
+        /** Java doc jar*/
+        task javadocJar(type: Jar, dependsOn: javadoc) {
+            getArchiveClassifier().convention('javadoc')
+            getArchiveClassifier().set('javadoc')
+            from javadoc.destinationDir
+        }
+    }
+
+    if (JavaVersion.current().isJava8Compatible()) {
+        allprojects {
+            tasks.withType(Javadoc) {
+                options.addStringOption('Xdoclint:none', '-quiet')
+            }
+        }
+    }
+    /** publish library with doc and source code */
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                groupId = GROUP_ID
+                artifactId = ARTIFACT_ID
+                version = VERSION
+                afterEvaluate {
+                    if (plugins.hasPlugin('com.android.application') || plugins.hasPlugin('com.android.library')) {
+                        from components.release
+                    } else if (plugins.hasPlugin("java")) {
+                        from components.java
+                    }
+                }
+                if (plugins.hasPlugin('com.android.application') || plugins.hasPlugin('com.android.library')) {
+                    artifact androidSourcesJar
+                    artifact androidJavadocsJar
+                } else if (plugins.hasPlugin("java")) {
+                    artifact sourcesJar
+                    artifact javadocJar
+                }
+
+            }
+        }
+    }
+
+}
+```
+
+将脚本maven-publish.gradle` 放到gradle目录下, 在待发布的模块build.gradle导入脚本
 
 ```
 apply from: rootProject.file("gradle/maven-publish.gradle")
@@ -203,33 +312,25 @@ apply from: rootProject.file("gradle/maven-publish.gradle")
 
 ### 配置版本
 
-脚本需要配置GROUP_ID、 VERSION、ARTIFACT_ID 这三个参数组成：`GROUP_ID:ARTIFACT_ID:VERSION`
+脚本需要配置GROUP_ID、 VERSION、ARTIFACT_ID ，这三个参数组成本地依赖：`GROUP_ID:ARTIFACT_ID:VERSION`
 
 注意这里的版本号请不要随便配置
 
-- 这个配置只关乎本地发布相关（mavenLocal），但是不配置远端发布会失败，但是这个和jitpack的依赖路径无关
-
-- jitpack远程依赖的路径和AGP4下是一模一样的
-
-    -  多模块下 `com.github.github用户名.项目名:模块名:release发布时的TAG`
-    -  单模块下 `com.github.github用户名.项目名:release发布时的TAG`
-    - 多模块下版本号统一为TAG
-
-  因此请严格遵守之前的格式来设置这三个参数， 不要多事！不要多事！不要多事！ 给自己找麻烦
-
-```
-# Version
-GROUP_ID=com.github.JailedBird.jitpack
-ARTIFACT_ID=lib1
-# ARTIFACT_ID=jitpack # config in your module
-VERSION=0.0.2
-```
+- **此配置只关乎本地依赖的路径（mavenLocal）, 与jitpack的依赖路径无关，但不配置会导致远端发布失败，**
+- jitpack远程依赖的路径和AGP4是一致的
+  - 多模块下，依赖格式为 `com.github.githubusername:projectname:release_tag`
+  - 单模块下，依赖格式为 `com.github.githubusername:projectname:release_tag`
+  - 多模块下版本号统一为github release's TAG
 
 
 
-假设按照标准的方式来配置， 下面说下本项目的配置方式：
+因此请严格遵守格式， 不要多事！不要多事！不要多事！
 
-因为GROUP_ID、VERSION是固定的，直接在根目录`gradle.properties` 配置即可， [完整文件](https://github.com/JailedBird/jitpack/blob/main/gradle.properties)
+
+
+假设按照标准格式来配置， 本分支的的配置如下：
+
+因为`GROUP_ID`、`VERSION`是固定的，直接在根目录`gradle.properties` 配置即可， [完整文件](https://github.com/JailedBird/jitpack/blob/feat-AGP7-muti-lib/gradle.properties)
 
 ```
 # Version
@@ -238,7 +339,7 @@ GROUP_ID=com.github.JailedBird.jitpack
 VERSION=0.0.3-beta01
 ```
 
-在需要发布的模块下新建`gradle.properties` 文件， 配置ARTIFACT_ID, [完整文件](https://github.com/JailedBird/jitpack/blob/main/lib1/gradle.properties)
+在需要发布的模块下新建`gradle.properties` 文件， 配置独立的 `ARTIFACT_ID`, [完整文件](https://github.com/JailedBird/jitpack/blob/feat-AGP7-muti-lib/lib1/gradle.properties)
 
 ```
 ARTIFACT_ID=lib1
@@ -248,13 +349,13 @@ ARTIFACT_ID=lib1
 
 ### 本地发布
 
-AGP7下支持本地发布， 执行 `gradlew publishToMavenLocal` 发布本地模块， 默认是发布到`mavenLocal` (对应USER_HOME/.m2/文件夹）， 根据配置GROUP_ID、 VERSION、ARTIFACT_ID找到对应的文件， 测试阶段本地依赖， 请在仓库导入处配置 `mavenLocal()`
+AGP7下支持本地发布， 执行 `gradlew publishToMavenLocal` 发布本地模块， 默认是发布到`mavenLocal` (对应`USER_HOME/.m2/`文件夹）， 根据配置GROUP_ID、 VERSION、ARTIFACT_ID找到对应的文件; 测试阶段使用本地依赖时， 不要忘记加上 `mavenLocal()`以导入仓库；
 
 
 
 ### 远端发布
 
-首先完成github release， 参照之前即可， 注意请把 TAG配置的VERSION一致， 然后去jitpack构建发布 根据提示依赖即可（注意：最好按照之前说的统一配置）
+按照之前 AGP4多模块配置-github版本发布， 发布代码； 注意请将 TAG设置为代码中配置的VERSION （此处统一为`0.0.3-beta01`）， 免得出问题；
 
 ![image-20221118173801965](https://zhaojunchen-1259455842.cos.ap-nanjing.myqcloud.com/img/image-20221118173801965.png)
 
@@ -267,17 +368,21 @@ implementation 'com.github.JailedBird.jitpack:lib_jvm:0.0.3-beta01'
 
 
 
-### 导入方式总结
-
-多模块下，格式为： `com.github.github用户名.项目名:模块名:release发布时的TAG` ，不会因为GROUP_ID、 VERSION、ARTIFACT_ID而改变
-
-
-
 ## 4、 AGP7发布单模块发布
 
-演示分支：
+### 演示分支
 
-和AGP7多模块配置类似， 但是版本号格式变为了 `com.github.github用户名.项目名:release发布时的TAG` ， 由于只是单个library， 因此直接在本模块下配置`gradle.properties` 即可
+https://github.com/JailedBird/jitpack/tree/feat-AGP7-single-lib
+
+
+
+### 版本配置
+
+其他的步骤和AGP7完全一致， 不同的是由于只存在单个library， 因此直接在本模块下配置`gradle.properties` 即可， 配置格式单library方式配置：
+
+ `com.github.githubusername:projectname:release_tag`
+
+如本分支中使用如下配置：
 
 ```
 GROUP_ID=com.github.JailedBird
@@ -293,21 +398,10 @@ implementation 'com.github.JailedBird:jitpack:feat-AGP7-single-lib-V1.0.0'
 
 
 
-### 导入方式总结
-
-单模块下，格式为： `com.github.github用户名.项目名:release发布时的TAG`, 不会因为GROUP_ID、 VERSION、ARTIFACT_ID而改变
-
-
-
-
-
 ## AGP7发布小结
 
+- 相比AGP4， AGP7支持本地发布和本地导入， 这对调试是很方便；
 
+- AGP7和AGP4的远程依赖路径完全完全一致；
 
-- 相比AGP4， AGP7支持本地发布和本地导入， 这对调试是很方便的
-
-- 配置的插件版本只适用本地依赖， jitpack依赖的全称路径和AGP4是一致的， 为避免麻烦最好统一起来
-
-  
-
+- 建议将配置的GROUP_ID、ARTIFACT_ID、VERSION和远程依赖相匹配， 避免出问题；
