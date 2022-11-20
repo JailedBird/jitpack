@@ -139,10 +139,9 @@ github release下也能找到对应的发布源码：
  再次点击 `Get it` 会滑到网页下方， 会告诉你导入插件的方式， 按照路径导入即可
 
 ```css
-	dependencies {
-	    implementation 'com.github.JailedBird.jitpack:lib1:feat-AGP4-muti-lib-V1.0.0'
+	
+	implementation 'com.github.JailedBird.jitpack:lib1:feat-AGP4-muti-lib-V1.0.0'
         implementation 'com.github.JailedBird.jitpack:lib_jvm:feat-AGP4-muti-lib-V1.0.0'
-	}
 ```
 
 
@@ -330,10 +329,10 @@ apply from: rootProject.file("gradle/maven-publish.gradle")
 注意这里的版本号请不要随便配置
 
 - **此配置只关乎本地依赖的路径（mavenLocal）, 与jitpack的依赖路径无关，但不配置会导致远端发布失败，**
-- jitpack远程依赖的路径和AGP4是一致的
+- jitpack远程依赖的路径和AGP4一致
   - 多模块下，依赖格式为 `com.github.githubusername:projectname:release_tag`
-  - 单模块下，依赖格式为 `com.github.githubusername:projectname:release_tag`
-  - 多模块下版本号统一为github release's TAG
+  - 单模块下，依赖格式为 `com.github.githubusername.projectname:libraryname:release_tag`
+  - 多模块下版本号均为github release's TAG， 因此本地版本配置最好统一
 
 
 
