@@ -1,4 +1,4 @@
-# Jitpack发布最强指南.md
+# Jitpack发布最强指南
 
 [TOC]
 
@@ -61,7 +61,7 @@ apply plugin: 'com.android.library'
 
 ## 1、 AGP4 多library发布
 
-gradle7之下的库基本上都可以用这种方式发布，发布及其简单;
+gradle7之下的库基本上都可以用这种方式发布，发布极其简单;
 
 
 
@@ -106,7 +106,7 @@ plugins {
 }
 ```
 
-注意：不需要去配置 GROUP_ID、ARTIFACT_ID、VERSION也不需要再去配置;
+注意：不需要去配置 GROUP_ID、ARTIFACT_ID、VERSION；
 
 
 
