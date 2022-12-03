@@ -4,7 +4,13 @@
 
 ## 0、 前言
 
-本文示例仓库[https://github.com/JailedBird/jitpack](https://github.com/JailedBird/jitpack)，如果对大家有帮助， 希望来个star鼓励一下:sunglasses:
+本文如果对大家有帮助， 希望来个star鼓励一下:sunglasses:
+
+- 示例github地址[https://github.com/JailedBird/jitpack](https://github.com/JailedBird/jitpack)
+
+- 实例jitpack地址[https://jitpack.io/#JailedBird/jitpack](https://jitpack.io/#JailedBird/jitpack)
+
+  
 
 创建这个示例仓库有以下几点原因：
 
