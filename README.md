@@ -8,7 +8,7 @@
 
 - 示例github地址[https://github.com/JailedBird/jitpack](https://github.com/JailedBird/jitpack)
 
-- 实例jitpack地址[https://jitpack.io/#JailedBird/jitpack](https://jitpack.io/#JailedBird/jitpack)
+- 示例jitpack地址[https://jitpack.io/#JailedBird/jitpack](https://jitpack.io/#JailedBird/jitpack)
 
   
 
