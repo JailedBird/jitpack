@@ -1,5 +1,7 @@
 # Jitpack发布最强指南
 
+[![GitHub stars](https://img.shields.io/github/stars/JailedBird/jitpack.svg)](https://github.com/JailedBird/jitpack/stargazers) [![GitHub forks](https://img.shields.io/github/forks/JailedBird/jitpack.svg)](https://github.com/JailedBird/jitpack/network/members) [![GitHub issues](https://img.shields.io/github/issues/JailedBird/jitpack.svg)](https://github.com/JailedBird/jitpack/issues) [![GitHub license](https://img.shields.io/github/license/JailedBird/jitpack.svg)](https://github.com/JailedBird/jitpack/blob/master/LICENSE)
+
 [TOC]
 
 ## 0、 前言
